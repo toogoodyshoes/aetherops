@@ -10,3 +10,15 @@ Before you begin, ensure you have the following installed:
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html)
 - AWS CLI configured with appropriate credentials
 
+## Branching Strategy
+I've used git-flow branching strategy for this project. Refer [documentation](https://github.com/toogoodyshoes/jenkins-infrastructure/wiki#branching-strategy).
+
+### Main Branches
+- **Name:** `main`
+- **Name:** `develop`
+
+### Supporting Branches
+- **Name:** `feature`
+- **Name:** `release`
+- **Name:** `hotfix`
+
