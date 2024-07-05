@@ -1,10 +1,11 @@
 provider "aws" {
   region = var.region
+  profile = var.profile
 }
 
 module "network" {
   source = "./modules/network"
-  zone_a = zone_a
+  zone_a = var.zone_a
 }
 
 module "compute" {

@@ -1,5 +1,5 @@
 output "vpc_id" {
-  value = aws_vpc.ci_cd.ic
+  value = aws_vpc.ci_cd.id
 }
 
 output "zone_a_subnet_id" {

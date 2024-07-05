@@ -1,9 +1,10 @@
 terraform {
-  cloud {
-    organization = "nile_org"
-    workspaces {
-      name = "jenkins-infrastructure"
-    }
+  backend "s3" {
+    bucket         = "jenkins-statefile"
+    key            = "jenkins/terraform.tfstate"
+    dynamodb_table = "jenkins-terraform-state-locking"
+    region         = "ap-south-1"
+    profile        = "jenkins"
   }
 
   required_providers {
