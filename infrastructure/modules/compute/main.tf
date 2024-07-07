@@ -31,6 +31,7 @@ resource "aws_instance" "jenkins_controller" {
   key_name               = "jenkins_controller"
   subnet_id              = var.zone_a_subnet_id
   vpc_security_group_ids = [aws_security_group.jenkins_controller.id]
+  associate_public_ip_address = true
 
   tags = {
     Name = "Jenkins Controller"
