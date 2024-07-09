@@ -3,20 +3,29 @@
   become: true
   tasks:
     - name: Installing Java 17
-      apt:
-        update_cache: yes
-        name: fontconfig openjdk-17-jre
-
-    - name: Verify Java installation
-      command: java -version
+      ansible.builtin.apt:
+        update_cache: true
+        pkg:
+          - fontconfig
+          - openjdk-17-jre
 
     - name: Downloading Jenkins keyring...
-      command:  wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+      ansible.builtin.get_url:
+        url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+        dest: /usr/share/keyrings/jenkins-keyring.asc
+        mode: "0644"
 
     - name: Adding software source configuration file
-      command: echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" https://pkg.jenkins.io/debian-stable binary/ | tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+      ansible.builtin.shell: |
+        set -o pipefail
+        echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" \
+        https://pkg.jenkins.io/debian-stable binary/ \
+        | tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+      args:
+        executable: /bin/bash
+        creates: /etc/apt/sources.list.d/jenkins.list
 
     - name: Installing Jenkins...
-      apt:
-        update_cache: yes
+      ansible.builtin.apt:
+        update_cache: true
         name: jenkins
