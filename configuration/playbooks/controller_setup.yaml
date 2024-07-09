@@ -1,0 +1,22 @@
+- name: Configure Jenkins Controllers
+  hosts: jenkins_controllers
+  become: true
+  tasks:
+    - name: Installing Java 17
+      apt:
+        update_cache: yes
+        name: fontconfig openjdk-17-jre
+
+    - name: Verify Java installation
+      command: java -version
+
+    - name: Downloading Jenkins keyring...
+      command:  wget -O /usr/share/keyrings/jenkins-keyring.asc https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
+
+    - name: Adding software source configuration file
+      command: echo "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]" https://pkg.jenkins.io/debian-stable binary/ | tee /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+    - name: Installing Jenkins...
+      apt:
+        update_cache: yes
+        name: jenkins

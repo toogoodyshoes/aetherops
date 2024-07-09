@@ -1,0 +1,13 @@
+jenkins_controllers:
+  children:
+    ap_south_1:
+      hosts:
+        controller_koala:
+          ansible_host:
+          ansible_user: ubuntu
+jenkins_agents:
+  children:
+    ap_south_1:
+      hosts:
+        agent_panda:
+          ansible_host:
