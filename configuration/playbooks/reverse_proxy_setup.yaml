@@ -1,0 +1,9 @@
+- name: Setup Nginx Reverse Proxy
+  hosts: nginx_reverse_proxies
+  become: true
+
+  tasks:
+    - name: Install nginx
+      ansible.builtin.apt:
+        update_cache: true
+        name: nginx

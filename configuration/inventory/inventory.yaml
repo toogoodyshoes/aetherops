@@ -11,3 +11,10 @@ jenkins_agents:
       hosts:
         agent_panda:
           ansible_host:
+nginx_reverse_proxies:
+  children:
+    ap_south_1:
+      hosts:
+        proxy_giraffe:
+          ansible_host: 
+          ansible_user: 
