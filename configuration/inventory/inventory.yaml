@@ -4,7 +4,7 @@ jenkins_controllers:
       hosts:
         controller_koala:
           ansible_host:
-          ansible_user: ubuntu
+          ansible_user:
 jenkins_agents:
   children:
     ap_south_1:
