@@ -40,7 +40,7 @@ resource "aws_instance" "jenkins_controller" {
 
 
 resource "aws_security_group" "reverse_proxy" {
-  name = "nginx-reverse-proxy"
+  name   = "nginx-reverse-proxy"
   vpc_id = var.vpc_id
 }
 
@@ -52,26 +52,34 @@ resource "aws_vpc_security_group_egress_rule" "reverse_proxy_anywhere" {
 
 resource "aws_vpc_security_group_ingress_rule" "reverse_proxy_nginx" {
   security_group_id = aws_security_group.reverse_proxy.id
-  cidr_ipv4 = "0.0.0.0/0"
-  ip_protocol = "tcp"
-  from_port = 80
-  to_port = 80
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "tcp"
+  from_port         = 80
+  to_port           = 80
 }
 
 resource "aws_vpc_security_group_ingress_rule" "reverse_proxy_ssh" {
   security_group_id = aws_security_group.reverse_proxy.id
-  cidr_ipv4 = "0.0.0.0/0"
-  ip_protocol = "tcp"
-  from_port = 22
-  to_port = 22
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "tcp"
+  from_port         = 22
+  to_port           = 22
+}
+
+resource "aws_vpc_security_group_ingress_rule" "reverse_proxy_https" {
+  security_group_id = aws_security_group.reverse_proxy.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "tcp"
+  from_port         = 443
+  to_port           = 443
 }
 
 resource "aws_instance" "reverse_proxy" {
-  ami = var.amazon_linux
-  instance_type = var.instance_type
-  key_name = "nginx_reverse_proxy"
-  subnet_id = var.zone_a_subnet_id
-  vpc_security_group_ids = [aws_security_group.reverse_proxy.id]
+  ami                         = var.amazon_linux
+  instance_type               = var.instance_type
+  key_name                    = "nginx_reverse_proxy"
+  subnet_id                   = var.zone_a_subnet_id
+  vpc_security_group_ids      = [aws_security_group.reverse_proxy.id]
   associate_public_ip_address = true
 
   tags = {
