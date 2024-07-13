@@ -7,3 +7,11 @@
       ansible.builtin.apt:
         update_cache: true
         name: nginx
+
+    - name: Copy configuration
+      ansible.builtin.copy:
+        src: ../templates/nginx.conf
+        dest: /etc/nginx/nginx.conf
+        owner: root
+        group: root
+        mode: "0644"
