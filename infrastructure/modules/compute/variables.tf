@@ -15,3 +15,7 @@ variable "instance_type" {
 variable "zone_a_subnet_id" {
   type = string
 }
+
+variable "zone_a_monitoring_subnet_id" {
+  type = string
+}

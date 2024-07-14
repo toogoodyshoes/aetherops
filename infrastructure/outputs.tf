@@ -7,3 +7,13 @@ output "nginx_reverse_proxy_public_ip" {
   description = "Nginx Reverse Proxy Public IP"
   value       = module.compute.reverse_proxy_public_ip
 }
+
+output "prometheus_reverse_proxy_public_ip" {
+  description = "Prometheus Reverse Proxy Public IP"
+  value = module.compute.reverse_proxy_public_ip
+}
+
+output "prometheus_server_public_ip" {
+  description = "Prometheus Server Public IP"
+  value = module.compute.prometheus_server_public_ip
+}
