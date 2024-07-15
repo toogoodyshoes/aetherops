@@ -18,10 +18,13 @@ nginx_reverse_proxies:
         proxy_giraffe:
           ansible_host: 
           ansible_user: 
+        proxy_sloth:
+          ansible_host: 13.235.128.96
+          anisble_user: nihar
 prometheus_servers:
   children:
     ap_south_1:
       hosts:
         prometheus_goldfish:
-          ansible_host: 
+          ansible_host:
           ansible_user: 

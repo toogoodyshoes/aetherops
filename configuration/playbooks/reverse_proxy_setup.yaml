@@ -1,5 +1,5 @@
 - name: Setup Nginx Reverse Proxy
-  hosts: nginx_reverse_proxies
+  hosts: proxy_sloth
   become: true
 
   tasks:
@@ -7,11 +7,3 @@
       ansible.builtin.apt:
         update_cache: true
         name: nginx
-
-    - name: Copy configuration
-      ansible.builtin.copy:
-        src: ../templates/nginx.conf
-        dest: /etc/nginx/nginx.conf
-        owner: root
-        group: root
-        mode: "0644"
