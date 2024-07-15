@@ -19,8 +19,8 @@ nginx_reverse_proxies:
           ansible_host: 
           ansible_user: 
         proxy_sloth:
-          ansible_host: 13.235.128.96
-          anisble_user: nihar
+          ansible_host:
+          anisble_user:
 prometheus_servers:
   children:
     ap_south_1:

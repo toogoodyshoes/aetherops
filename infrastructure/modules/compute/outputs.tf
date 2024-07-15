@@ -17,3 +17,7 @@ output "prometheus_reverse_proxy_public_ip" {
 output "prometheus_server_public_ip" {
   value = aws_instance.prometheus_server.public_ip
 }
+
+output "prometheus_server_private_ip" {
+  value = aws_instance.prometheus_server.private_ip
+}
