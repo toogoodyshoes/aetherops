@@ -1,0 +1,21 @@
+- name: Grafana Setup
+  hosts: prometheus_servers
+  become: true
+  tasks:
+    - name: Install prequisite packages
+      ansible.builtin.apt:
+        update_cache: true
+        pkg:
+          - adduser
+          - libfontconfig1
+          - musl
+
+    - name: Download Debian package
+      ansible.builtin.get_url:
+        url: https://dl.grafana.com/enterprise/release/grafana-enterprise_11.1.0_amd64.deb
+        dest: /tmp/
+        mode: '0644'
+
+    - name: Install Grafana
+      ansible.builtin.apt:
+        deb: /tmp/grafana-enterprise_11.1.0_amd64.deb

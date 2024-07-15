@@ -23,5 +23,5 @@ prometheus_servers:
     ap_south_1:
       hosts:
         prometheus_goldfish:
-          ansible_host:
-          ansible_user:
+          ansible_host: 
+          ansible_user: 

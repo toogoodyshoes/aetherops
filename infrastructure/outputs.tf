@@ -3,6 +3,11 @@ output "jenkins_controller_public_ip" {
   value       = module.compute.jenkins_controller_public_ip
 }
 
+output "jenkins_controller_private_ip" {
+  description = "Jenkins Controller Private IP"
+  value       = module.compute.jenkins_controller_private_ip
+}
+
 output "nginx_reverse_proxy_public_ip" {
   description = "Nginx Reverse Proxy Public IP"
   value       = module.compute.reverse_proxy_public_ip
