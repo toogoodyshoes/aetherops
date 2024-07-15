@@ -1,0 +1,107 @@
+- name: Install Prometheus
+  hosts: prometheus_servers
+  become: true
+  vars:
+    prometheus_dir: /tmp/prometheus-2.53.1.linux-amd64
+  tasks:
+
+    - name: Create prometheus user
+      ansible.builtin.user:
+        name: prometheus
+        shell: /bin/false
+        create_home: false
+
+    - name: Download Prometheus binary
+      ansible.builtin.get_url:
+        url: https://github.com/prometheus/prometheus/releases/download/v2.53.1/prometheus-2.53.1.linux-amd64.tar.gz
+        dest: /tmp/prometheus-2.53.1.linux-amd64.tar.gz
+        mode: '0644'
+
+    - name: Create a directory to extract prometheus
+      ansible.builtin.file:
+        path: "{{ prometheus_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Extract tar file
+      ansible.builtin.unarchive:
+        src: /tmp/prometheus-2.53.1.linux-amd64.tar.gz
+        dest: /tmp
+        remote_src: true
+        mode: '0644'
+
+    - name: Create a directory to install prometheus config files
+      ansible.builtin.file:
+        path: /etc/prometheus
+        state: directory
+        owner: prometheus
+        group: prometheus
+        mode: '0755'
+
+    - name: Create a directory to install prometheus
+      ansible.builtin.file:
+        path: /var/lib/prometheus
+        state: directory
+        owner: prometheus
+        group: prometheus
+        mode: '0755'
+
+    - name: Copy prometheus executable
+      ansible.builtin.copy:
+        src: "{{ prometheus_dir }}/prometheus"
+        dest: /usr/local/bin/prometheus
+        owner: prometheus
+        group: prometheus
+        remote_src: true
+        mode: '0744'
+
+    - name: Copy prometheus executable
+      ansible.builtin.copy:
+        src: "{{ prometheus_dir }}/promtool"
+        dest: /usr/local/bin/promtool
+        owner: prometheus
+        group: prometheus
+        remote_src: true
+        mode: '0744'
+
+    - name: Copy prometheus consoles
+      ansible.builtin.copy:
+        src: "{{ prometheus_dir }}/consoles"
+        dest: /etc/prometheus
+        owner: prometheus
+        group: prometheus
+        remote_src: true
+        mode: '0755'
+
+    - name: Copy prometheus console libraries
+      ansible.builtin.copy:
+        src: "{{ prometheus_dir }}/console_libraries"
+        dest: /etc/prometheus
+        owner: prometheus
+        group: prometheus
+        remote_src: true
+        mode: '0755'
+
+    # - name: Set ownership recursively
+    #   ansible.builtin.file:
+    #     path: "/etc/prometheus"
+    #     recurse: true
+    #     owner: prometheus
+    #     group: prometheus
+
+    - name: Copy prometheus configuration
+      ansible.builtin.copy:
+        src: "{{ prometheus_dir }}/prometheus.yml"
+        dest: /etc/prometheus/prometheus.yml
+        remote_src: true
+        owner: prometheus
+        group: prometheus
+        mode: '0644'
+
+    - name: Copy a prometheus service file
+      ansible.builtin.copy:
+        src: ../prometheus.service
+        dest: /etc/systemd/system/prometheus.service
+        owner: root
+        group: root
+        mode: '777'

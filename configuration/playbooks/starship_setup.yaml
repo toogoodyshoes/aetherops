@@ -1,0 +1,20 @@
+- name: Setup Startship on remote host
+  become: true
+  hosts: prometheus_servers
+  tasks:
+
+    - name: Update bashrc to initialize Starship
+      ansible.builtin.lineinfile:
+        path: ~/.bashrc
+        line: 'eval "$(starship init bash)"'
+        create: true
+        insertafter: EOF
+        mode: "0644"
+
+    - name: Copy starship configuration file
+      ansible.builtin.copy:
+        src: ~/.config/starship.toml
+        dest: ~/.config/starship.toml
+        owner: nihar
+        group: nihar
+        mode: '0644'
